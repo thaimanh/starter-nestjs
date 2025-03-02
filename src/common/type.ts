@@ -1,16 +1,16 @@
 export type PaginationType = {
-  page: number;
-  total: number;
-};
+  page: number
+  total: number
+}
 
 export type IsUniqueType = {
-  tableName: string;
-  column: string;
-};
+  tableName: string
+  column: string
+}
 
 export type SortOptions = {
-  order: string;
-  sort: string;
-};
+  order: string
+  sort: string
+}
 
-export type FindAllResponse<T> = {count: number; items: T[]};
+export type FindAllResponse<T> = { count: number; items: T[] }

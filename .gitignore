@@ -15,8 +15,10 @@ lerna-debug.log*
 # Environment
 .env
 
-# Yarn
+
+# module lock
 yarn.lock
+bun.lock
 
 # OS
 .DS_Store

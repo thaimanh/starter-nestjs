@@ -1,8 +1,8 @@
-import {IsString} from 'class-validator';
+import { IsString } from 'class-validator'
 
 export class OneUserDTO {
   @IsString()
-  email?: string;
+  email?: string
   @IsString()
-  id?: string;
+  id?: string
 }

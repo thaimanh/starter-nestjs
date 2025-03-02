@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - mongodb_data:/data/db
+
+  nodeapp:
+    build: .
+    container_name: nodeapp
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://admin:secret@mongodb:27017
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: ["node", "server.js"]
+
+volumes:
+  mongodb_data:
+

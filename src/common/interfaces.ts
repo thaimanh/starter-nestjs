@@ -1,17 +1,17 @@
 export interface IObject<T = unknown> {
-  [key: string]: T;
+  [key: string]: T
 }
 
 export interface IResponseCommon<ResultType> {
-  result: ResultType[] | ResultType;
+  result: ResultType[] | ResultType
   meta?:
     | {
-        total: number;
-        page: number;
+        total: number
+        page: number
       }
-    | any;
+    | unknown
 }
 
 export interface IResponseStatus {
-  result: boolean;
+  result: boolean
 }

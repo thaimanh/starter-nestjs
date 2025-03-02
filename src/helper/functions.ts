@@ -1,16 +1,16 @@
-import express from 'express';
-import {IObject} from '../common/interfaces';
-import * as bcrypt from 'bcrypt';
+import express from 'express'
+import { IObject } from '../common/interfaces'
+import * as bcrypt from 'bcrypt'
 
-const SALT_ROUND = 5;
+const SALT_ROUND = 5
 
 export const addZero = (item: string | number, length: number) => {
-  return item.toString().padStart(length, '0');
-};
+  return item.toString().padStart(length, '0')
+}
 
 export const hashMd5 = (str: string) => {
-  return bcrypt.hash(str, SALT_ROUND);
-};
+  return bcrypt.hash(str, SALT_ROUND)
+}
 
 /**
  *
@@ -19,106 +19,106 @@ export const hashMd5 = (str: string) => {
  * @returns {boolean}
  */
 export const compareHash = (str: string = '', strHash: string = '') => {
-  const result = bcrypt.compareSync(str, strHash);
-  return result;
-};
+  const result = bcrypt.compareSync(str, strHash)
+  return result
+}
 
-export const keys = () => {};
+export const keys = () => {}
 
 export const escapeRegExp = (text: string) => {
-  if (!text) return null;
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-};
+  if (!text) return null
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+}
 
-export const wait = (millisecond: number) =>
-  new Promise((resolve) => setTimeout(resolve, millisecond));
+export const wait = (millisecond: number) => new Promise((resolve) => setTimeout(resolve, millisecond))
 
 export const objArrToDict = <T>(arr: T[], indexKey: keyof T) => {
-  const normalizedObject: any = {};
+  const normalizedObject: { [key: string]: T } = {}
   for (let i = 0; i < arr.length; i++) {
-    const key = arr[i][indexKey];
+    const key = arr[i][indexKey]
     if (typeof key === 'string' || typeof key === 'number') {
-      normalizedObject[key.toString()] = arr[i];
+      normalizedObject[key.toString()] = arr[i]
     }
   }
-  return normalizedObject as {[key: string]: T};
-};
+  return normalizedObject as { [key: string]: T }
+}
 
 export const objArrDistinct = <T>(arr: T[], indexKey: keyof T) => {
-  const normalizedObject: any = {};
+  const normalizedObject: { [key: string]: T } = {}
   for (let i = 0; i < arr.length; i++) {
-    const key = arr[i][indexKey];
+    const key = arr[i][indexKey]
     if (typeof key === 'string' || typeof key === 'number') {
-      normalizedObject[key.toString()] = arr[i];
+      normalizedObject[key.toString()] = arr[i]
     }
   }
-  return Object.values(normalizedObject) as T[];
-};
+  return Object.values(normalizedObject) as T[]
+}
 
-export const objFilterKeys = (objSrc: IObject<any>, keys: string[]) => {
+export const objFilterKeys = (objSrc: IObject<unknown>, keys: string[]) => {
   if (!(objSrc instanceof Object)) {
-    objSrc = {};
+    objSrc = {}
   }
-  const objDest: IObject<any> = {};
+  const objDest: IObject<unknown> = {}
   for (const key of keys) {
     if (key in objSrc) {
-      objDest[key] = objSrc[key];
+      objDest[key] = objSrc[key]
     }
   }
-  return objDest;
-};
+  return objDest
+}
 
 /**
  * @description Function used to filter undefined values
  * @param objSrc
  * @returns
  */
-export const objValidateKey = (objSrc: IObject<any>) => {
+export const objValidateKey = (objSrc: IObject<unknown>) => {
   if (!(objSrc instanceof Object)) {
-    objSrc = {};
+    objSrc = {}
   }
 
-  const objDest: IObject<any> = {};
+  const objDest: IObject<unknown> = {}
 
   for (const key of Object.keys(objSrc)) {
     if (objSrc[key]) {
-      objDest[key] = objSrc[key];
+      objDest[key] = objSrc[key]
     }
   }
 
-  return objDest;
-};
+  return objDest
+}
 
 export const isJson = (str: string) => {
   try {
-    JSON.parse(str);
+    JSON.parse(str)
   } catch (e) {
-    return false;
+    console.log(e)
+    return false
   }
-  return true;
-};
+  return true
+}
 
 export function downloadFileFromPath(res: express.Response, filePath: string) {
   return new Promise((resolve, reject) => {
     res.download(filePath, (err) => {
-      if (err) reject(err);
-      res.end();
-      resolve(undefined);
-    });
-  });
+      if (err) reject(err)
+      res.end()
+      resolve(undefined)
+    })
+  })
 }
 
-export function downloadFileFromStream(res: express.Response, fileStream: any) {
+export function downloadFileFromStream(res: express.Response, fileStream: NodeJS.ReadableStream) {
   return new Promise((resolve, reject) => {
-    fileStream.pipe(res);
+    fileStream.pipe(res)
     fileStream.on('end', () => {
-      res.end();
-      resolve(undefined);
-    });
-    fileStream.on('error', reject);
-  });
+      res.end()
+      resolve(undefined)
+    })
+    fileStream.on('error', reject)
+  })
 }
 
 export function isEmpty(source: IObject) {
-  return Object.keys(source).length === 0;
+  return Object.keys(source).length === 0
 }

@@ -1,40 +1,40 @@
-import {GENDER} from '@entities/user.entity';
-import {IsInt, IsEmail, IsString, IsNotEmpty, MinLength, IsEnum} from 'class-validator';
+import { GENDER } from '@entities/user.entity'
+import { IsInt, IsEmail, IsString, IsNotEmpty, MinLength, IsEnum } from 'class-validator'
 
 export class CreateUserDto {
   @IsNotEmpty()
-  @IsEmail(undefined, {message: 'Email is invalid'})
-  email: string;
+  @IsEmail(undefined, { message: 'Email is invalid' })
+  email: string
 
   @IsNotEmpty()
   @MinLength(8)
-  password: string;
+  password: string
 
   @IsNotEmpty()
   @IsString()
-  first_name: string;
+  first_name: string
 
   @IsNotEmpty()
   @IsString()
-  last_name: string;
+  last_name: string
 
   @IsNotEmpty()
   @IsString()
   @IsEnum(GENDER)
-  gender: string;
+  gender: string
 
   @IsNotEmpty()
   @IsString()
-  phone_number: string;
+  phone_number: string
 
   @IsNotEmpty()
   @IsString()
-  birthday: string;
+  birthday: string
 
   @IsNotEmpty()
-  role: string;
+  role: string
 
   @IsNotEmpty()
   @IsInt()
-  point: number;
+  point: number
 }

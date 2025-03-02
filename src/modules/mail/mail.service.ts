@@ -1,13 +1,13 @@
-import {MailerService} from '@nestjs-modules/mailer';
-import {Injectable} from '@nestjs/common';
-import {MailDto} from './dto/mail.dto';
+import { MailerService } from '@nestjs-modules/mailer'
+import { Injectable } from '@nestjs/common'
+import { MailDto } from './dto/mail.dto'
 
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
   async sendMail(msg: MailDto) {
-    const {to, subject, cc, bcc, replyTo, inReplyTo, template, context} = msg;
+    const { to, subject, cc, bcc, replyTo, inReplyTo, template, context } = msg
     return this.mailerService.sendMail({
       to: to,
       cc: cc,
@@ -16,7 +16,7 @@ export class MailService {
       inReplyTo: inReplyTo,
       subject: subject,
       template: `./template/${template}`,
-      context: context,
-    });
+      context: context
+    })
   }
 }

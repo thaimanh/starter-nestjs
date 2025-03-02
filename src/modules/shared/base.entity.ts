@@ -1,8 +1,8 @@
-import {Prop} from '@nestjs/mongoose';
+import { Prop } from '@nestjs/mongoose'
 
 export class BaseEntity {
-  _id?: string;
+  _id?: string
 
-  @Prop({type: Date, default: null})
-  deleted_at: Date;
+  @Prop({ type: Date, default: null })
+  deleted_at: Date
 }

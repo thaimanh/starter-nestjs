@@ -1,2 +1,2 @@
-export * from './roles.decorator';
-export * from './isPublic.decorator';
+export * from './roles.decorator'
+export * from './isPublic.decorator'
