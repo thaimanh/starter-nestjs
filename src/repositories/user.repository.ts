@@ -13,4 +13,7 @@ export class UsersRepository extends BaseRepositoryAbstract<User> implements Use
   ) {
     super(usersRepository)
   }
+  dosomething(): void {
+    throw new Error('Method not implemented.')
+  }
 }

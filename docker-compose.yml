@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   mongodb:
@@ -6,28 +6,27 @@ services:
     container_name: mongodb
     restart: always
     ports:
-      - "27017:27017"
+      - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mongodb_data:/data/db
 
-  nodeapp:
+  nestjs-app:
     build: .
-    container_name: nodeapp
+    container_name: nestjs-app
     restart: always
     ports:
-      - "3000:3000"
+      - '${PORT}:${PORT}'
     depends_on:
       - mongodb
-    environment:
-      MONGO_URI: mongodb://admin:secret@mongodb:27017
+    env_file:
+      - ${ENV_FILE:-.env}
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    command: ["node", "server.js"]
+    command: ['npm', 'run', 'start:dev']
 
 volumes:
   mongodb_data:
-

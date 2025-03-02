@@ -26,7 +26,7 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
     return null
   }
 
-  async validate(req: Request, payload: unknown) {
+  async validate(req: Request, payload: { _id: string; id: string; email: string; role: string }) {
     const access_token = req.cookies.accessToken
 
     const foundToken = await this.tokenService.findOneByCondition({

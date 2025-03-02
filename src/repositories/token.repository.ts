@@ -13,4 +13,7 @@ export class TokenRepository extends BaseRepositoryAbstract<Token> implements To
   ) {
     super(tokenRepository)
   }
+  dosomething(): void {
+    throw new Error('Method not implemented.')
+  }
 }

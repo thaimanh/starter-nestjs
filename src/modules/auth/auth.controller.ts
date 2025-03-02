@@ -32,8 +32,7 @@ export class AuthController {
   }
 
   @Post('/logout')
-  logout(@Res() response: Response, @Req() request: unknown) {
-    const userId = request.user.id
-    return this.authService.logout(userId, response)
+  logout(@Res() response: Response, @Req() request: Request & { user: { id: string } }) {
+    return this.authService.logout(request, response)
   }
 }

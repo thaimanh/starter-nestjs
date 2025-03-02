@@ -13,4 +13,7 @@ export class OtpRepository extends BaseRepositoryAbstract<Otp> implements OtpRep
   ) {
     super(otpRepository)
   }
+  dosomething(): void {
+    throw new Error('Method not implemented.')
+  }
 }
