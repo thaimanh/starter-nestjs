@@ -14,6 +14,8 @@ lerna-debug.log*
 
 # Environment
 .env
+.env.dev
+.env.prod
 
 
 # module lock

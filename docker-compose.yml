@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:6
@@ -10,23 +8,21 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
     volumes:
       - mongodb_data:/data/db
-
-  nestjs-app:
+  user-service:
+    image: user-service
     build: .
-    container_name: nestjs-app
+    container_name: user-service
     restart: always
     ports:
-      - '${PORT}:${PORT}'
+      - '${DOCKER_SERVER_PORT}:${SERVER_PORT}'
     depends_on:
       - mongodb
-    env_file:
-      - ${ENV_FILE:-.env}
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    command: ['npm', 'run', 'start:dev']
 
 volumes:
   mongodb_data:

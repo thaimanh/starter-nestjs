@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JWTStrategy } from './strategy'
 import { JwtModule } from '@nestjs/jwt'
 import { LoggerModule } from '../logger/logger.module'
@@ -30,6 +30,15 @@ import { OtpModule } from './otp/otp.module'
       signOptions: {
         expiresIn: process.env.JWT_EXPIRE_IN
       }
+    }),
+    JwtModule.registerAsync({
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET_KEY'),
+        signOptions: {
+          expiresIn: configService.get<string | number>('JWT_EXPIRE_IN')
+        }
+      }),
+      inject: [ConfigService]
     })
   ],
   controllers: [AuthController],

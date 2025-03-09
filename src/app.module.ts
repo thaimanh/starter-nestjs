@@ -8,6 +8,7 @@ import { JWTGuard } from './modules/auth/guard'
 import { MailModule } from './modules/mail/mail.module'
 import { LoggerModule } from './modules/logger/logger.module'
 import { MongooseModule } from '@nestjs/mongoose'
+import { HealthModule } from './modules/health/health.module';
 import LoggerMiddleware from './middleware/log.middleware'
 
 @Module({
@@ -17,14 +18,22 @@ import LoggerMiddleware from './middleware/log.middleware'
     UsersModule,
     LoggerModule,
     MongooseModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DB_URL'),
-        dbName: configService.get<string>('DB_NAME')
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const dbUser = configService.get<string>('DB_USERNAME')
+        const dbPass = configService.get<string>('DB_PASSWORD')
+        const dbName = configService.get<string>('DB_NAME')
+        const dbHost = configService.get<string>('DB_HOST')
+        const dbPort = configService.get<string>('DB_PORT')
+        return {
+          uri: `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`,
+          authSource: 'admin'
+        }
+      },
       inject: [ConfigService]
     }),
     MailModule,
-    LoggerModule
+    LoggerModule,
+    HealthModule
   ],
   controllers: [],
   providers: [
@@ -37,3 +46,4 @@ export class AppModule implements NestModule {
     consumer.apply(LoggerMiddleware).forRoutes('/')
   }
 }
+//mongodb://USERNAME:PASSWORD@HOST:PORT/DATABASE
